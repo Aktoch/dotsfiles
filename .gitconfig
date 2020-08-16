@@ -1,0 +1,13 @@
+[alias]
+	#commit
+  c = commit -m
+	#push
+  p = push
+	pf = push -f
+  #remote
+  r = remote -v                     # show remotes (verbose)
+[user]
+	name = Aktoch
+	email = aktoch0@gmail.com
+[core]
+	editor = vim

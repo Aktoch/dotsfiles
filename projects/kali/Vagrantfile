@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+# https://docs.vagrantup.com
 
 Vagrant.configure("2") do |config|
-  # https://docs.vagrantup.com.
   config.vm.box = "kalilinux/rolling"
    config.vm.box_check_update = true  
    config.vm.network "public_network"

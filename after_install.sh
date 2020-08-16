@@ -121,8 +121,8 @@ Todos(){
     Vagrant
 }
 # ------------------------------- EXECUÇÃO ----------------------------------------- #
-while test -m "$1"; do
-    case "S1" in
+while test -n "$1"; do
+    case "$1" in
     -h) echo "$MENSAGEM_USO" && exit 0 ;;
     -i) KEY_TODOS=1 ;;
     -a) KEY_INSTALAR=1 ;;

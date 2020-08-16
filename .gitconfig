@@ -8,6 +8,6 @@
   r = remote -v                     # show remotes (verbose)
 [user]
 	name = Aktoch
-	email = aktoch0@gmail.com
+	email = student.aktoch@gmail.com
 [core]
 	editor = vim

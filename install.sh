@@ -1,6 +1,6 @@
 echo "alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'" >> .bashrc
 source .bashrc
-git clone --bare https://github.com/Aktoch/dotfiles $HOME/.cfg
+git clone --bare git@github.com:Aktoch/dotfiles.git $HOME/.cfg
 function config {
    /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }

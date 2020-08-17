@@ -16,3 +16,20 @@ Vagrant.configure("2") do |config|
      apt-get install -y zsh tilix firefox xfce4
    SHELL
 end
+#Vagrant.configure("2") do |config|
+#  config.vm.box = "debian/buster64"
+#  # config.vm.network "public_network"
+#   config.vm.synced_folder ".", "/vagrant"
+#   config.vm.provider "virtualbox" do |vb|
+#     vb.gui = true
+#     vb.name = "Dev"
+#     vb.customize ["modifyvm", :id, "--vram", "128"]  
+#     vb.memory = "2048"
+#   end
+#   config.vm.provision "shell", inline: <<-SHELL
+#     apt-get update && apt-get upgrade -y
+#     sudo apt install -y vim neovim zsh git snapd firefox-esr-l10n-pt-br xfce4 xfce4-terminal plank
+#     reboot
+#   SHELL
+#end
+

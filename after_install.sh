@@ -12,6 +12,14 @@
 #    Neste exemplo o script será executado no modo de instalação que instala tudo.
 # Testado em:
 #   bash  5.0.17
+#  Para uso
+#  mude as variavel: 
+# ppa recomendo saber um pouco para pode adicionar os ppa nessa variavel
+# PROGRAMAS_PARA_INSTALAR sao os programas que serao instalados pelo apt
+# URL_DOWNLOAD sao links dos pacotes .deb que o script ira baixar é instalar /
+# (pacotes .deb pode ser colocados na pasta indicada pela variavel "DIR_DOWNLOAD" para serem instalados)
+# BOXES sao as boxes do vagrant(pode ser deixado em branco caso nao use)
+# quando rodado sem paramentos ele ira rodar um apt update.
 # ------------------------------- VARIÁVEIS ----------------------------------------- #
 MENSAGEM_USO="
     $(basename $0) - Para pos instalação do ubuntu 20.04
@@ -30,6 +38,7 @@ MENSAGEM_USO="
 MENSAGEM_ERRO="
      Nenhuma opção informada valida verifique o -h
 "
+DIR_DOWNLOAD="$HOME/Dowloads/apps"
 #PPA's
 PPA_LUTRIS="ppa:lutris-team/lutris"
 PPA_PYTHON="ppa:deadsnakes/ppa"
@@ -97,6 +106,7 @@ Download() {
 Snap() {
     sudo snap install code --classic
     sudo snap install discord
+    sudo snap install opera
 }
 Instalacao() {
     sudo dpkg --add-architecture i386

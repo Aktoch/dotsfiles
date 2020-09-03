@@ -105,8 +105,8 @@ Download() {
 }
 Snap() {
     sudo snap install code --classic
-    sudo snap install discord
-    sudo snap install opera
+    #sudo snap install discord
+    #sudo snap install opera
 }
 Instalacao() {
     sudo dpkg --add-architecture i386

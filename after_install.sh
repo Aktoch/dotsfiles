@@ -76,6 +76,7 @@ PROGRAMAS_PARA_INSTALAR=(
     snapd
     steam
     tilix
+    transmission
     tmux
     vagrant
     vim

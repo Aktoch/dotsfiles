@@ -6,7 +6,6 @@
 	pf = push -f
   #remote
   r = remote -v                     # show remotes (verbose)
-[user]
-	whoami = config user.email
+
 [core]
 	editor = vim

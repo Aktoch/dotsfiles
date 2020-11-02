@@ -80,6 +80,7 @@ PROGRAMAS_PARA_INSTALAR=(
     virtualbox
     vlc
     zsh
+    fdupes
 )
 BOX=(
     centos/7

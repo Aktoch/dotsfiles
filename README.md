@@ -1,5 +1,5 @@
 # Dotfiles 
-As configurações que uso no meu dia a dia  que sem bem poucas. Também um script para pos-instalação para facilitar uma reinstalação de sistema ou troca de maquina.
+As configurações que uso no meu dia a dia  que são bem poucas. Também um script para pos-instalação para facilitar uma reinstalação de sistema ou troca de maquina.
 ***
 # Para instalar meu dotfiles.
 Precisa do "curl" e do "git" instalado para funcionar depois copie o comando a baixo e execute.

@@ -81,6 +81,7 @@ PROGRAMAS_PARA_INSTALAR=(
     vlc
     zsh
     fdupes
+    neofetch
 )
 BOX=(
     centos/7

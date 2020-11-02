@@ -13,7 +13,7 @@
 # Testado em:
 #   bash  5.0.17
 #  Para uso
-#  mude as variavel: 
+#  mude as variavel:
 # ppa recomendo saber um pouco para pode adicionar os ppa nessa variavel
 # PROGRAMAS_PARA_INSTALAR sao os programas que serao instalados pelo apt
 # URL_DOWNLOAD sao links dos pacotes .deb que o script ira baixar é instalar /
@@ -33,12 +33,11 @@ MENSAGEM_USO="
     -p - Adiciona as PPA'S
     -t - Update e Upgrade.
     -v - Adicinar as vagrant boxes
-    se nao passa nenhum parametro sera feito um apt update
 "
 MENSAGEM_ERRO="
      Nenhuma opção informada valida verifique o -h
 "
-DIR_DOWNLOAD="$HOME/Dowloads/apps"
+DIR_DOWNLOAD="$HOME/Downloads"
 #PPA's
 PPA_LUTRIS="ppa:lutris-team/lutris"
 PPA_PYTHON="ppa:deadsnakes/ppa"
@@ -51,10 +50,10 @@ KEY_TODOS=0
 KEY_UPDATE=0
 KEY_VAGRANT=0
 #Pacotes .deb que serao baixados para instalar.
-URL_DOWNLOAD=(
-    https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-    https://d2t3ff60b2tol4.cloudfront.net/builds/insync_3.2.5.40859-focal_amd64.deb
+URL=(
+    'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+    'https://d2t3ff60b2tol4.cloudfront.net/builds/insync_3.3.0.40894-focal_amd64.deb'
+    'https://download3.vmware.com/software/player/file/VMware-Player-16.0.0-16894299.x86_64.bundle'
 )
 #Pacotes instalados pelo APT
 PROGRAMAS_PARA_INSTALAR=(
@@ -63,12 +62,11 @@ PROGRAMAS_PARA_INSTALAR=(
     fonts-hack-ttf
     fonts-powerline
     git
-    gnome-software
     gnome-tweaks
     net-tools
     nmap
+    vim
     neovim
-    piper
     powerline
     python3
     python3-pip
@@ -79,12 +77,11 @@ PROGRAMAS_PARA_INSTALAR=(
     transmission
     tmux
     vagrant
-    vim
     virtualbox
     vlc
     zsh
 )
-BOXES=(
+BOX=(
     centos/7
     debian/buster64
     kalilinux/rolling
@@ -99,14 +96,14 @@ Lutris() {
 }
 Download() {
     mkdir -p "$DIR_DOWNLOAD"
-    for idownload in ${URL[@]}; do
-        wget -c "$idownload" -P "$DIR_DOWNLOAD"
+    for idown in ${URL[@]}; do
+        wget -c "${URL[@]}" -P "$DIR_DOWNLOAD"
     done
     sudo dpkg -i $DIR_DOWNLOAD/*.deb
 }
 Snap() {
     sudo snap install code --classic
-    #sudo snap install discord
+    sudo snap install discord
     #sudo snap install opera
 }
 Instalacao() {
@@ -117,19 +114,18 @@ Instalacao() {
         else
             echo "[INSTALADO] - $nome_do_programa"
         fi
-    done    
+    done
 }
-Vagrant(){
-  for ivagrant in ${$BOXES[@]}; do
-    vagrant box add "$ivagrant"
-  done
+Vagrant() {
+    for ivagr in ${BOX[@]}; do
+        vagrant box add "$ivagr"
+    done
 }
-Todos(){
+Todos() {
     Ppa
     Download
     Snap
     Instalacao
-    Vagrant
 }
 # ------------------------------- EXECUÇÃO ----------------------------------------- #
 while test -n "$1"; do
@@ -137,17 +133,17 @@ while test -n "$1"; do
     -h) echo "$MENSAGEM_USO" && exit 0 ;;
     -i) KEY_TODOS=1 ;;
     -a) KEY_INSTALAR=1 ;;
-    -d) KEY_DOWNLOAD=1 ;;    
+    -d) KEY_DOWNLOAD=1 ;;
     -l) KEY_LUTRIS=1 ;;
     -p) KEY-PPA=1 ;;
     -t) KEY_UPDATE=1 ;;
-    -v) HEY_VAGRANT=1 ;;
+    -v) KEY_VAGRANT=1 ;;
     *) echo "$MENSAGEM_ERRO" && exit 1 ;;
     esac
     shift
 done
 
-sudo apt update -y
+# sudo apt update -y
 [ $KEY_TODOS -eq 1 ] && Todos && exit 0
 [ $KEY_INSTALAR -eq 1 ] && Instalacao && exit 0
 [ $KEY_DOWNLOAD -eq 1 ] && Download && exit 0

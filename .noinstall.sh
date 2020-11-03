@@ -4,4 +4,3 @@ function config {
 }
 config checkout
 config config status.showUntrackedFiles no
-./.pos_instalacao.sh -i

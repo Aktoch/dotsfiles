@@ -53,7 +53,7 @@ KEY_VAGRANT=0
 URL=(
     'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
     'https://d2t3ff60b2tol4.cloudfront.net/builds/insync_3.3.0.40894-focal_amd64.deb'
-    'https://download3.vmware.com/software/player/file/VMware-Player-16.0.0-16894299.x86_64.bundle'
+    'https://download3.vmware.com/software/player/file/VMware-Player-16.1.0-17198959.x86_64.bundle'
 )
 #Pacotes instalados pelo APT
 PROGRAMAS_PARA_INSTALAR=(
@@ -84,7 +84,7 @@ PROGRAMAS_PARA_INSTALAR=(
     neofetch
 )
 BOX=(
-    centos/7
+    centos/8
     debian/buster64
     kalilinux/rolling
     hashicorp/bionic64

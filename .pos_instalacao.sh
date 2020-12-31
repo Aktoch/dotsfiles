@@ -1,62 +1,25 @@
 #!/usr/bin/env bash
-#
-# after_INSTALAR.sh - Pos-instalação do Ubuntu 20.04
-#
-# github      https://www.github.com/Aktoch
 # Autor:      João "Aktoch" Florencio
-# Manutenção: João "Aktoch" Florencio
-#
-#    Observações usuario que executar precisa de tem permisão de sudo
-#    Exemplos:
-#    $ ./after_INSTALAR.sh -i
-#    Neste exemplo o script será executado no modo de instalação que instala tudo.
-# Testado em:
-#   bash  5.0.17
-#  Para uso
-#  mude as variavel:
-# ppa recomendo saber um pouco para pode adicionar os ppa nessa variavel
-# PROGRAMAS_PARA_INSTALAR sao os programas que serao instalados pelo apt
-# URL_DOWNLOAD sao links dos pacotes .deb que o script ira baixar é instalar /
-# (pacotes .deb pode ser colocados na pasta indicada pela variavel "DIR_DOWNLOAD" para serem instalados)
-# BOXES sao as boxes do vagrant(pode ser deixado em branco caso nao use)
-# quando rodado sem paramentos ele ira rodar um apt update.
-# ------------------------------- VARIÁVEIS ----------------------------------------- #
-MENSAGEM_USO="
-    $(basename $0) - Para pos instalação do ubuntu 20.04
-    $(basename $0) - [OPÇÕES]
-
-    -h - Menu de ajuda
-    -i - Todos a baixo menos o lutris
-    -a - instala somente os pacotes do apt
-    -d - instala somenteos pacotes .deb    
-    -l - instala somente o lutris
-    -p - Adiciona as PPA'S
-    -t - Update e Upgrade.
-    -v - Adicinar as vagrant boxes
-"
-MENSAGEM_ERRO="
-     Nenhuma opção informada valida verifique o -h
-"
-DIR_DOWNLOAD="$HOME/Downloads"
-#PPA's
-PPA_LUTRIS="ppa:lutris-team/lutris"
-PPA_PYTHON="ppa:deadsnakes/ppa"
+# github      https://www.github.com/Aktoch
+##URL to open
 URL=(
     'https://linux.wps.com/'
     'https://my.vmware.com/en/web/vmware/downloads/details?downloadGroup=PLAYER-1610&productId=1039&rPId=55792'
     "https://discord.com/"
-    'https://code.visualstudio.com/download'
     'https://www.insynchq.com/'
+    'https://extensions.gnome.org/extension/1160/dash-to-panel/'
+    'https://extensions.gnome.org/extension/1319/gsconnect/'
+    'https://extensions.gnome.org/extension/2120/sound-percentage/'
+    'https://extensions.gnome.org/extension/906/sound-output-device-chooser/'
 )
-#Pacotes instalados pelo APT
-PROGRAMAS_PARA_INSTALAR=(
+#Packages installed by APT
+PACKAGES=(
     chrome-gnome-shell
     flameshot
     fonts-hack-ttf
     fonts-powerline
     git
     gnome-tweaks
-    net-tools
     nmap
     vim
     neovim
@@ -68,7 +31,7 @@ PROGRAMAS_PARA_INSTALAR=(
     steam
     tilix
     transmission
-    tmux    
+    tmux
     vagrant
     virtualbox
     vlc
@@ -77,47 +40,68 @@ PROGRAMAS_PARA_INSTALAR=(
     neofetch
 )
 BOX=(
-    centos/8
     debian/buster64
     kalilinux/rolling
     hashicorp/bionic64
 )
-# ------------------------------- FUNÇÕES ----------------------------------------- #
+# ------------------------------- FUNCTIONS ----------------------------------------- #
+Sshkey() {
+    ssh-keygen -t ed25519 -a 100
+}
 Ppa() {
-    sudo apt-add-repository "$PPA_PYTHON" -y
+    xargs -I % sudo add-apt-repository % <<EOF
+  ppa:deadsnakes/ppa
+EOF
 }
-OpenLinks() {    
-    for idown in ${URL[@]}; do
-        firefox "${URL[@]}" &
-    done
-    #sudo dpkg -i $DIR_DOWNLOAD/*.deb
-}
-Snap() {
-    sudo snap install code --classic
-    sudo snap install discord
-    #sudo snap install opera
-}
-Instalacao() {
+Install() {
     sudo dpkg --add-architecture i386
-    for nome_do_programa in ${PROGRAMAS_PARA_INSTALAR[@]}; do
-        if ! dpkg -l | grep -q $nome_do_programa; then
-            sudo apt install "$nome_do_programa" -y
+    sudo apt remove snapd --purge -y
+    for name_program in ${PACKAGES[@]}; do
+        if ! dpkg -l | grep -q $name_program; then
+            sudo apt install "$name_program" -y
         else
-            echo "[INSTALADO] - $nome_do_programa"
+            echo "[INSTALLED] - $name_program"
         fi
     done
 }
+Vscode() {
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg
+    sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+    sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+    sudo apt install apt-transport-https
+    sudo apt update
+    sudo apt install code
+}
+Brave() {
+    sudo apt install apt-transport-https curl gnupg
+    curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
+    echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+    sudo apt update
+    sudo apt install brave-browser
+}
+Ohmyzsh() {
+    sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
+Snap() {
+    sudo snap install discord
+}
 Vagrant() {
     for ivagr in ${BOX[@]}; do
-        vagrant box add "$ivagr"
+        vagrant box add "$ivagr" --provider virtualbox
     done
 }
-Todos() {
-    Ppa
-    Download
-    Snap
-    Instalacao
+Openlinks() {
+    firefox "${URL[@]}"
 }
-# ------------------------------- EXECUÇÃO ----------------------------------------- #
+# ------------------------------- EXECUTION ----------------------------------------- #
 sudo apt update
-OpenLinks
+#Sshkey
+Ppa
+Install
+# Vscode
+# Brave
+# Ohmyzsh
+# Snap
+#Vagrant
+#OpenLinks
+#sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean -y

@@ -1,26 +1,14 @@
-# Dotfiles 
-As configurações que uso no meu dia a dia  que são bem poucas. Também um script para pos-instalação para facilitar uma reinstalação de sistema ou troca de maquina.
-***
-## Requisitos
-
-* **curl**
-* **git**
-
-### instalação
-
-
+# Dotfiles
+## Install
 ```
-sh -c "`curl -fsSL https://raw.githubusercontent.com/Aktoch/dotfiles/master/.noinstall.sh`"
+git clone --bare https://github.com/Aktoch/dotfiles.git $HOME/.cfg
 ```
-executa o pos instala automaticamente.
-```
-sh -c "`curl -fsSL https://raw.githubusercontent.com/Aktoch/dotfiles/master/.install.sh`"
-```
+## Extras not included
 [SpaceVim](https://spacevim.org)
 ```
 curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
 ```
-[Oh my zsh](https://ohmyz.sh/) tema “agnoster”
+[Oh my zsh](https://ohmyz.sh/)
 ```
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```

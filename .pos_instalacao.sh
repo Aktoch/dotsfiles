@@ -41,19 +41,12 @@ DIR_DOWNLOAD="$HOME/Downloads"
 #PPA's
 PPA_LUTRIS="ppa:lutris-team/lutris"
 PPA_PYTHON="ppa:deadsnakes/ppa"
-#Chaves flags.
-KEY_DOWNLOAD=0
-KEY_INSTALAR=0
-KEY_LUTRIS=0
-KEY_PPA=0
-KEY_TODOS=0
-KEY_UPDATE=0
-KEY_VAGRANT=0
-#Pacotes .deb que serao baixados para instalar.
 URL=(
-    'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
-    'https://d2t3ff60b2tol4.cloudfront.net/builds/insync_3.3.0.40894-focal_amd64.deb'
-    'https://download3.vmware.com/software/player/file/VMware-Player-16.1.0-17198959.x86_64.bundle'
+    'https://linux.wps.com/'
+    'https://my.vmware.com/en/web/vmware/downloads/details?downloadGroup=PLAYER-1610&productId=1039&rPId=55792'
+    "https://discord.com/"
+    'https://code.visualstudio.com/download'
+    'https://www.insynchq.com/'
 )
 #Pacotes instalados pelo APT
 PROGRAMAS_PARA_INSTALAR=(
@@ -75,7 +68,7 @@ PROGRAMAS_PARA_INSTALAR=(
     steam
     tilix
     transmission
-    tmux
+    tmux    
     vagrant
     virtualbox
     vlc
@@ -93,15 +86,11 @@ BOX=(
 Ppa() {
     sudo apt-add-repository "$PPA_PYTHON" -y
 }
-Lutris() {
-    sudo add-apt-repository "$PPA_LUTRIS" -y && sudo apt INSTALAR-y lutris
-}
-Download() {
-    mkdir -p "$DIR_DOWNLOAD"
+OpenLinks() {    
     for idown in ${URL[@]}; do
-        wget -c "${URL[@]}" -P "$DIR_DOWNLOAD"
+        firefox "${URL[@]}" &
     done
-    sudo dpkg -i $DIR_DOWNLOAD/*.deb
+    #sudo dpkg -i $DIR_DOWNLOAD/*.deb
 }
 Snap() {
     sudo snap install code --classic
@@ -130,26 +119,5 @@ Todos() {
     Instalacao
 }
 # ------------------------------- EXECUÇÃO ----------------------------------------- #
-while test -n "$1"; do
-    case "$1" in
-    -h) echo "$MENSAGEM_USO" && exit 0 ;;
-    -i) KEY_TODOS=1 ;;
-    -a) KEY_INSTALAR=1 ;;
-    -d) KEY_DOWNLOAD=1 ;;
-    -l) KEY_LUTRIS=1 ;;
-    -p) KEY-PPA=1 ;;
-    -t) KEY_UPDATE=1 ;;
-    -v) KEY_VAGRANT=1 ;;
-    *) echo "$MENSAGEM_ERRO" && exit 1 ;;
-    esac
-    shift
-done
-
-# sudo apt update -y
-[ $KEY_TODOS -eq 1 ] && Todos && exit 0
-[ $KEY_INSTALAR -eq 1 ] && Instalacao && exit 0
-[ $KEY_DOWNLOAD -eq 1 ] && Download && exit 0
-[ $KEY_LUTRIS -eq 1 ] && Lutris && exit 0
-[ $KEY_PPA -eq 1 ] && Lutris && exit 0
-[ $KEY_UPDATE -eq 1 ] && sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
-[ $KEY_VAGRANT -eq 1 ] && Vagrant && exit 0
+sudo apt update
+OpenLinks

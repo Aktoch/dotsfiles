@@ -27,8 +27,7 @@ PACKAGES=(
     python3
     python3-pip
     python-is-python3
-    snapd
-    steam
+    snapd    
     tilix
     transmission
     tmux
@@ -93,15 +92,21 @@ Vagrant() {
 Openlinks() {
     firefox "${URL[@]}"
 }
+Steam() {
+    sudo apt install -y flatpak gnome-software-plugin-flatpak
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    flatpak install flathub com.valvesoftware.Steam
+}
 # ------------------------------- EXECUTION ----------------------------------------- #
 sudo apt update
-#Sshkey
+Sshkey
 Ppa
 Install
-# Vscode
-# Brave
-# Ohmyzsh
-# Snap
-#Vagrant
-#OpenLinks
-#sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean -y
+Steam
+Vscode
+Brave
+Ohmyzsh
+Snap
+Vagrant
+OpenLinks
+sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean -y

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Autor:      João "Aktoch" Florencio
 # github      https://www.github.com/Aktoch
-##URL to open
 URL=(
     'https://linux.wps.com/'
     'https://my.vmware.com/en/web/vmware/downloads/info/slug/desktop_end_user_computing/vmware_workstation_player/16_0'

@@ -4,7 +4,7 @@
 ##URL to open
 URL=(
     'https://linux.wps.com/'
-    'https://my.vmware.com/en/web/vmware/downloads/details?downloadGroup=PLAYER-1610&productId=1039&rPId=55792'
+    'https://my.vmware.com/en/web/vmware/downloads/info/slug/desktop_end_user_computing/vmware_workstation_player/16_0'
     "https://discord.com/"
     'https://www.insynchq.com/'
     'https://extensions.gnome.org/extension/1160/dash-to-panel/'
@@ -17,6 +17,36 @@ BOX=(
     kalilinux/rolling
     hashicorp/bionic64
 )
+APPS=(
+    ffmpeg
+    chrome-gnome-shell
+    flameshot
+    fonts-hack-ttf
+    fonts-powerline
+    git
+    gnome-tweaks
+    nmap
+    vim
+    neovim
+    powerline
+    python3
+    python3-pip
+    tilix
+    transmission
+    tmux
+    vagrant
+    virtualbox
+    vlc
+    zsh
+    fdupes
+    neofetch
+    steam
+    apt-transport-https
+    curl
+    gnupg
+    brave-browser
+    code
+)
 # ------------------------------- FUNCTIONS ----------------------------------------- #
 Sshkey() {
     ssh-keygen -t ed25519 -a 100
@@ -26,44 +56,36 @@ Ppa() {
   ppa:deadsnakes/ppa
 EOF
 }
-Install() {
-    sudo dpkg --add-architecture i386
-    sudo apt remove snapd --purge -y
-    sudo apt update
-    sudo apt install -y ffmpeg chrome-gnome-shell flameshot fonts-hack-ttf fonts-powerline git gnome-tweaks nmap vim neovim powerline python3 python3-pip python-is-python3 snapd tilix transmission tmux vagrant virtualbox vlc zsh fdupes neofetch steam apt-transport-https curl gnupg brave-browser code
-}
-Vscode() {
-    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg
-    sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
-    sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'    
-}
 Brave() {
     curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
     echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 }
-Ohmyzsh() {
-    sh -c "$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+Vscode() {
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg
+    sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
+    sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 }
 Snap() {
-    sudo snap install discord
+    sudo snap install discord powershell skype sosumi thunderbird onlyoffice-desktopeditors
 }
 Vagrant() {
     for ivagr in ${BOX[@]}; do
         vagrant box add "$ivagr" --provider virtualbox
     done
 }
-Openlinks() {
-    firefox "${URL[@]}"
+Install() {
+    sudo dpkg --add-architecture i386    
+    sudo apt update    
+    for counter in ${APPS[@]}; do
+        sudo apt install -y "$counter"
+    done
 }
 # ------------------------------- EXECUTION ----------------------------------------- #
-sudo apt update
 Sshkey
 Ppa
-Vscode
 Brave
+Vscode
 Install
-Ohmyzsh
 Snap
 Vagrant
-Openlinks
 sudo apt upgrade -y && sudo apt autoremove -y && sudo apt autoclean -y

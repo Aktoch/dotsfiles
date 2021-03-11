@@ -1,5 +1,4 @@
 export ZSH="/home/aktoch/.oh-my-zsh"
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="clean"
 plugins=(git
 vagrant)

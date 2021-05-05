@@ -19,8 +19,8 @@ APPS=(
     tilix
     transmission
     tmux
-    vagrant
     virtualbox
+    vagrant    
     vlc
     zsh
     fdupes
